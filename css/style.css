@@ -1336,3 +1336,9 @@ input[type="text"] {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+.fun-class {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
