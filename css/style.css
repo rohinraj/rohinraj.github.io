@@ -1465,18 +1465,14 @@ input[type="text"] {
   height: 200px;
   background-size: cover;
   background-position: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-repeat: no-repeat;
+  background-color: #f5f5f5;
   position: relative;
 }
 
 .project-entry .project-img::after {
-  content: "📷";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 48px;
-  opacity: 0.3;
+  content: "";
+  display: none;
 }
 
 .project-entry .desc {
