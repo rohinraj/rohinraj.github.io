@@ -135,6 +135,85 @@
 	};
 
 	
+	// Side Navigation
+	var sideNavigation = function() {
+		var $sideNav = $('#sideNav');
+		var $navDots = $('.nav-dot');
+		var sections = [];
+		
+		// Build sections array
+		$navDots.each(function() {
+			var target = $(this).attr('href');
+			if ($(target).length) {
+				sections.push({
+					id: target,
+					offset: $(target).offset().top,
+					height: $(target).outerHeight()
+				});
+			}
+		});
+		
+		// Smooth scroll on click
+		$navDots.on('click', function(e) {
+			e.preventDefault();
+			var target = $(this).attr('href');
+			if ($(target).length) {
+				// Use native scrollIntoView for smoother performance
+				document.querySelector(target).scrollIntoView({
+					behavior: 'smooth',
+					block: 'start'
+				});
+			}
+		});
+		
+		// Update active state on scroll
+		var updateActiveNav = function() {
+			var scrollPos = $(window).scrollTop() + $(window).height() / 3;
+			
+			// Show/hide nav after hero section
+			if ($(window).scrollTop() > 400) {
+				$sideNav.addClass('visible');
+			} else {
+				$sideNav.removeClass('visible');
+			}
+			
+			// Find active section
+			var current = '';
+			for (var i = 0; i < sections.length; i++) {
+				if (scrollPos >= sections[i].offset) {
+					current = sections[i].id;
+				}
+			}
+			
+			// Update active class
+			$navDots.removeClass('active');
+			if (current) {
+				$('.nav-dot[href="' + current + '"]').addClass('active');
+			}
+		};
+		
+		// Update on scroll and resize
+		$(window).on('scroll', updateActiveNav);
+		$(window).on('resize', function() {
+			// Rebuild sections array on resize
+			sections = [];
+			$navDots.each(function() {
+				var target = $(this).attr('href');
+				if ($(target).length) {
+					sections.push({
+						id: target,
+						offset: $(target).offset().top,
+						height: $(target).outerHeight()
+					});
+				}
+			});
+			updateActiveNav();
+		});
+		
+		// Initial update
+		updateActiveNav();
+	};
+
 	$(function(){
 		contentWayPoint();
 		goToTop();
@@ -143,6 +222,7 @@
 		parallax();
 		// pieChart();
 		skillsWayPoint();
+		sideNavigation();
 	});
 
 
